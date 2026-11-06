@@ -4,8 +4,8 @@ Evolução do tutorial Flaskr (Flask 3.1.3) com arquitetura MVC, persistência v
 Flask-SQLAlchemy, uploads de imagens, interface em Bootstrap 5 e um painel
 financeiro que roda apenas em memória.
 
-- **Repositório:** `COLE_AQUI_O_LINK_DO_SEU_GITHUB`
-- **Aluno(a):** `SEU NOME`
+- **Repositório:** `https://github.com/vinicius2837/flask/tree/main/examples/tutorial`
+- **Aluno(a):** `Vinicius Marques Costa`
 
 ## Como executar
 ```bash

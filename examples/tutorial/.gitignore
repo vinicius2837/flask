@@ -13,7 +13,7 @@ build/
 *.swp
 *~
 
-   instance/
-   venv/
-   flaskr/static/uploads/*
-   !flaskr/static/uploads/.gitkeep
+instance/
+venv/
+flaskr/static/uploads/*
+!flaskr/static/uploads/.gitkeep

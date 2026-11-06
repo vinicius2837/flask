@@ -2,7 +2,7 @@
 name = "flaskr"
 version = "1.0.0"
 description = "The basic blog app built in the Flask tutorial."
-readme = "README.rst"
+readme = "README.md"
 license = {file = "LICENSE.txt"}
 maintainers = [{name = "Pallets", email = "contact@palletsprojects.com"}]
 classifiers = ["Private :: Do Not Upload"]
