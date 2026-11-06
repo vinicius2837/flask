@@ -1,19 +1,37 @@
 {% extends 'base.html' %}
-
-{% block header %}
-  <h1>{% block title %}Edit "{{ post['title'] }}"{% endblock %}</h1>
-{% endblock %}
-
+{% block title %}Editar "{{ post.title }}"{% endblock %}
 {% block content %}
-  <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title" value="{{ request.form['title'] or post['title'] }}" required>
-    <label for="body">Body</label>
-    <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
-    <input type="submit" value="Save">
-  </form>
-  <hr>
-  <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
-    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-  </form>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-3">Editar post</h1>
+        <form method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="title" class="form-label">Título</label>
+            <input class="form-control" name="title" id="title"
+                   value="{{ request.form['title'] or post.title }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="body" class="form-label">Conteúdo</label>
+            <textarea class="form-control" name="body" id="body" rows="5">{{ request.form['body'] or post.body }}</textarea>
+          </div>
+          <div class="mb-3">
+            <label for="imagem_post" class="form-label">Trocar imagem (opcional)</label>
+            {% if post.imagem_post %}
+            <div class="mb-2">
+              <img src="{{ url_for('static', filename='uploads/' ~ post.imagem_post) }}"
+                   class="img-thumbnail" style="max-height:140px" alt="Imagem atual">
+            </div>
+            {% endif %}
+            <input class="form-control" type="file" name="imagem_post" id="imagem_post"
+                   accept="image/png,image/jpeg,image/gif,image/webp">
+          </div>
+          <button class="btn btn-primary" type="submit">Salvar</button>
+          <a class="btn btn-link" href="{{ url_for('index') }}">Cancelar</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

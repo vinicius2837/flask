@@ -12,3 +12,8 @@ build/
 .idea/
 *.swp
 *~
+
+   instance/
+   venv/
+   flaskr/static/uploads/*
+   !flaskr/static/uploads/.gitkeep

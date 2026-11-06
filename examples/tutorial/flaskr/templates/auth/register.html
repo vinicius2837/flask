@@ -1,15 +1,30 @@
 {% extends 'base.html' %}
-
-{% block header %}
-  <h1>{% block title %}Register{% endblock %}</h1>
-{% endblock %}
-
+{% block title %}Cadastro{% endblock %}
 {% block content %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Register">
-  </form>
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-3">Criar conta</h1>
+        <form method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="username" class="form-label">Usuário</label>
+            <input class="form-control" name="username" id="username"
+                   value="{{ request.form.get('username', '') }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Senha</label>
+            <input class="form-control" type="password" name="password" id="password" required>
+          </div>
+          <div class="mb-3">
+            <label for="avatar" class="form-label">Foto de perfil (opcional)</label>
+            <input class="form-control" type="file" name="avatar" id="avatar"
+                   accept="image/png,image/jpeg,image/gif,image/webp">
+          </div>
+          <button class="btn btn-primary w-100" type="submit">Cadastrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

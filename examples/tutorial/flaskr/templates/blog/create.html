@@ -1,15 +1,31 @@
 {% extends 'base.html' %}
-
-{% block header %}
-  <h1>{% block title %}New Post{% endblock %}</h1>
-{% endblock %}
-
+{% block title %}Novo post{% endblock %}
 {% block content %}
-  <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title" value="{{ request.form['title'] }}" required>
-    <label for="body">Body</label>
-    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
-    <input type="submit" value="Save">
-  </form>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-3">Novo post</h1>
+        <form method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="title" class="form-label">Título</label>
+            <input class="form-control" name="title" id="title"
+                   value="{{ request.form['title'] }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="body" class="form-label">Conteúdo</label>
+            <textarea class="form-control" name="body" id="body" rows="5">{{ request.form['body'] }}</textarea>
+          </div>
+          <div class="mb-3">
+            <label for="imagem_post" class="form-label">Imagem (opcional)</label>
+            <input class="form-control" type="file" name="imagem_post" id="imagem_post"
+                   accept="image/png,image/jpeg,image/gif,image/webp">
+          </div>
+          <button class="btn btn-primary" type="submit">Publicar</button>
+          <a class="btn btn-link" href="{{ url_for('index') }}">Cancelar</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

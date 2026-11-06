@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Painel Financeiro{% endblock %}
+{% block content %}
+<h1 class="h3 mb-1">Painel Financeiro</h1>
+<p class="text-muted">Cálculos feitos em memória: nada é salvo no banco de dados.</p>
+
+<div class="row g-4">
+  <!-- IRPF -->
+  <div class="col-lg-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-primary text-white">
+        <i class="bi bi-receipt"></i> IRPF mensal (estimativa)
+      </div>
+      <div class="card-body">
+        <form method="post">
+          <input type="hidden" name="ferramenta" value="irpf">
+          <div class="mb-3">
+            <label for="salario_bruto" class="form-label">Salário bruto (R$)</label>
+            <input class="form-control" name="salario_bruto" id="salario_bruto"
+                   inputmode="decimal" placeholder="Ex.: 6000,00"
+                   value="{{ form.get('salario_bruto', '') if form.get('ferramenta') == 'irpf' else '' }}" required>
+          </div>
+          <button class="btn btn-primary" type="submit">Calcular IRPF</button>
+        </form>
+
+        {% if irpf %}
+        <hr>
+        <dl class="row mb-0">
+          <dt class="col-7">Alíquota da faixa</dt>
+          <dd class="col-5 text-end">{{ irpf.aliquota|round(1) }}%</dd>
+          <dt class="col-7">Imposto pela tabela</dt>
+          <dd class="col-5 text-end">R$ {{ irpf.imposto_tabela }}</dd>
+          <dt class="col-7">Redutor (Lei 15.270/2025)</dt>
+          <dd class="col-5 text-end">- R$ {{ irpf.redutor }}</dd>
+          <dt class="col-7">Desconto estimado (IRPF)</dt>
+          <dd class="col-5 text-end fw-bold text-danger">R$ {{ irpf.imposto }}</dd>
+          <dt class="col-7">Alíquota efetiva</dt>
+          <dd class="col-5 text-end">{{ irpf.aliquota_efetiva }}%</dd>
+          <dt class="col-7">Salário após IRPF</dt>
+          <dd class="col-5 text-end">R$ {{ irpf.liquido }}</dd>
+        </dl>
+        {% endif %}
+      </div>
+      <div class="card-footer small text-muted">
+        Estimativa simplificada sobre o salário bruto (sem INSS ou dependentes).
+      </div>
+    </div>
+  </div>
+
+  <!-- Rescisão: 13º proporcional -->
+  <div class="col-lg-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-success text-white">
+        <i class="bi bi-briefcase"></i> Rescisão: 13º proporcional
+      </div>
+      <div class="card-body">
+        <form method="post">
+          <input type="hidden" name="ferramenta" value="rescisao">
+          <div class="mb-3">
+            <label for="salario_base" class="form-label">Salário base (R$)</label>
+            <input class="form-control" name="salario_base" id="salario_base"
+                   inputmode="decimal" placeholder="Ex.: 3000,00"
+                   value="{{ form.get('salario_base', '') if form.get('ferramenta') == 'rescisao' else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="meses" class="form-label">Meses trabalhados no ano (0 a 12)</label>
+            <input class="form-control" type="number" min="0" max="12" name="meses" id="meses"
+                   value="{{ form.get('meses', '') if form.get('ferramenta') == 'rescisao' else '' }}" required>
+          </div>
+          <button class="btn btn-success" type="submit">Calcular 13º</button>
+        </form>
+
+        {% if decimo %}
+        <hr>
+        <dl class="row mb-0">
+          <dt class="col-7">Valor de 1/12 (um avo)</dt>
+          <dd class="col-5 text-end">R$ {{ decimo.avo }}</dd>
+          <dt class="col-7">Meses considerados</dt>
+          <dd class="col-5 text-end">{{ decimo.meses }}/12</dd>
+          <dt class="col-7">13º proporcional</dt>
+          <dd class="col-5 text-end fw-bold text-success">R$ {{ decimo.decimo_terceiro }}</dd>
+        </dl>
+        {% endif %}
+      </div>
+      <div class="card-footer small text-muted">
+        Valor bruto aproximado: salário ÷ 12 × meses trabalhados.
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
